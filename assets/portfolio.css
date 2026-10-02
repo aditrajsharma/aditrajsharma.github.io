@@ -1,24 +1,24 @@
 @font-face {
   font-family: Syne;
-  src: url("/assets/fonts/syne-800.ttf");
+  src: url("./fonts/syne-800.ttf");
   font-weight: 800;
   font-display: swap;
 }
 @font-face {
   font-family: Syne;
-  src: url("/assets/fonts/syne-700.ttf");
+  src: url("./fonts/syne-700.ttf");
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: Inter;
-  src: url("/assets/fonts/inter-400.ttf");
+  src: url("./fonts/inter-400.ttf");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: Inter;
-  src: url("/assets/fonts/inter-500.ttf");
+  src: url("./fonts/inter-500.ttf");
   font-weight: 500;
   font-display: swap;
 }

@@ -70,7 +70,12 @@ const projects = [
   },
 ];
 const heroTiles = projects;
-const asset = (p) => "/assets/" + p;
+const basePath =
+  document
+    .querySelector('link[rel="stylesheet"][href*="portfolio.css"]')
+    ?.getAttribute("href")
+    ?.replace(/assets\/portfolio\.css.*$/, "") || "./";
+const asset = (p) => basePath + "assets/" + p;
 const grid = document.getElementById("image-grid");
 heroTiles.forEach((p, i) => {
   const card = document.createElement("figure");
@@ -82,14 +87,14 @@ heroTiles.forEach((p, i) => {
   card.append(img);
   grid.append(card);
 });
-const work = location.pathname.replace(/\/$/, "") === "/work";
+const work = location.pathname.replace(/\/$/, "").endsWith("/work");
 document.getElementById("home-view").hidden = work;
 document.getElementById("work-view").hidden = !work;
 if (work) {
   document
     .querySelector("[data-nav=work]")
-    .setAttribute("aria-current", "page");
-  document.title = "Selected Work — Your Name";
+    ?.setAttribute("aria-current", "page");
+  document.title = "Selected Work — ADI";
 }
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 document.addEventListener(
