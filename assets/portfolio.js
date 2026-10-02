@@ -155,9 +155,9 @@ const EMAIL = ""; // Add your real contact email here before publishing.
 const dialogs = {
   about: () =>
     openDialog(
-      "THE PERSON BEHIND THE PRACTICE",
-      "A different way of seeing.",
-      '<p>I’m Your Name, an independent visual designer and artist working across identities, editorial design, and digital experiences. I’m drawn to unexpected combinations, clear ideas, and work with a point of view.</p><p>My practice connects strategic thinking with hands-on experimentation — moving between typography, image-making, and interactive design.</p><p class="micro">SAMPLE BIO — REPLACE WITH YOUR OWN STORY.</p><button class="accent-button" id="contact-from-about">Let’s make something ↗</button>',
+      "A LITTLE ABOUT ME",
+      "Curious by nature. Builder by habit.",
+      "<p>I’m a Computer Science student who likes figuring out how things work by building them.</p><p>I’ve worked across web development, backend systems, AI/ML and data-driven projects. Most of what I learn starts as a question, turns into a small experiment, and eventually becomes a project.</p><p>Right now, I’m focused on becoming a stronger software engineer—one project at a time.</p><button class=\"accent-button\" id=\"contact-from-about\">Get in touch ↗</button>",
     ),
   contact: () => {
     openDialog(
