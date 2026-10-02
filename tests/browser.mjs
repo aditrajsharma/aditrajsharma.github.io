@@ -1,0 +1,60 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import { mkdirSync, writeFileSync } from 'node:fs';
+mkdirSync('verification', { recursive: true });
+const browser = await chromium.launch({ args: ['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 1050 }, deviceScaleFactor: 1 });
+const errors = [];
+page.on('pageerror', e => errors.push(e.message));
+page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+await page.addInitScript(() => {
+  window.shaderProbe = { values: {}, draws: 0 };
+  for (const C of [window.WebGLRenderingContext, window.WebGL2RenderingContext]) {
+    if (!C) continue;
+    const proto = C.prototype;
+    const locations = new WeakMap();
+    const lookup = proto.getUniformLocation;
+    proto.getUniformLocation = function(program, name) { const location = lookup.call(this, program, name); if (location) locations.set(location, name); return location; };
+    for (const method of ['uniform1f', 'uniform2f']) {
+      const fn = proto[method];
+      proto[method] = function(loc, ...values) { const name = locations.get(loc); if (name) window.shaderProbe.values[name] = values; return fn.call(this, loc, ...values); };
+    }
+    const draw = proto.drawElements;
+    proto.drawElements = function(...args) { window.shaderProbe.draws++; return draw.apply(this, args); };
+  }
+});
+await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle' });
+const canvas = page.locator('.dot-matrix canvas');
+await canvas.waitFor();
+await page.waitForFunction(() => window.shaderProbe.draws > 5);
+const initial = await page.evaluate(() => window.shaderProbe);
+for (const [key, value] of Object.entries({ uGridScale: 60, uMouseAmount: 0.04, uPulseSpeed: 0.4, uRadius: 0.15, uOpacity: 0.35 })) assert.equal(initial.values[key][0], value);
+const box = await canvas.boundingBox();
+assert(box.width === 1440 && box.height === 1050);
+await page.mouse.move(box.x + box.width * 0.9, box.y + box.height * 0.15);
+await page.waitForFunction(() => window.shaderProbe.values.uMouse?.[0] > 0.65);
+const afterPointer = await page.evaluate(() => window.shaderProbe);
+assert(afterPointer.values.uMouse[1] > 0.5);
+assert(afterPointer.values.uTime[0] > initial.values.uTime[0]);
+await page.screenshot({ path: 'verification/desktop.png', fullPage: true });
+await page.locator('#themeToggle').click();
+assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+await page.screenshot({ path: 'verification/dark.png', fullPage: true });
+assert.equal(await page.locator('.dot-matrix').evaluate(el => getComputedStyle(el).backgroundColor), 'rgba(0, 0, 0, 0)');
+await page.locator('[data-project="0"]').click();
+assert(await page.locator('dialog').isVisible());
+await page.keyboard.press('Escape');
+await page.locator('#themeToggle').click();
+await page.setViewportSize({ width: 390, height: 844 });
+await page.evaluate(() => window.scrollTo(0, 0));
+await page.waitForFunction(() => document.querySelector('.dot-matrix canvas').height === 844);
+assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+await page.screenshot({ path: 'verification/mobile.png', fullPage: true });
+await page.setViewportSize({ width: 1440, height: 1050 });
+await page.evaluate(() => window.scrollTo(0, 0));
+const beforeResume = await page.evaluate(() => window.shaderProbe.draws);
+await page.waitForFunction(n => window.shaderProbe.draws > n + 5, beforeResume);
+assert.deepEqual(errors, []);
+writeFileSync('verification/results.json', JSON.stringify({ passed: true, initial, afterPointer, desktopCanvas: box, checks: ['Configured shader uniforms', 'Live time animation', 'Smoothed pointer drift', 'Desktop and mobile rendering', 'Responsive canvas resize', 'No mobile horizontal overflow', 'Theme toggle', 'Project dialog and Escape', 'Rendering resumes after scroll', 'No browser console or page errors'] }, null, 2));
+console.log('Browser verification passed. Screenshots and results in verification/.');
+await browser.close();
