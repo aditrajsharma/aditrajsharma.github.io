@@ -13,9 +13,8 @@ await build({
   define: { 'process.env.NODE_ENV': '"production"' },
   alias: { '@designcodeio/threeui': resolve('src/threeui-local.tsx') },
   plugins: [{ name: 'registered-styles', setup(build) {
-    // Serve the exact CSS at its registered path, retaining relative asset URLs.
     build.onResolve({ filter: /^@designcodeio\/threeui\/style\.css$/ }, () => ({ path: 'registered-styles', namespace: 'threeui-css' }));
-    build.onLoad({ filter: /.*/, namespace: 'threeui-css' }, () => ({ contents: `const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = '/src/shaders/threeui.css'; document.head.appendChild(link);`, loader: 'js' }));
+    build.onLoad({ filter: /.*/, namespace: 'threeui-css' }, () => ({ contents: ``, loader: 'js' }));
   }}],
 });
 console.log('Built scene; all three registered source hashes verified.');
