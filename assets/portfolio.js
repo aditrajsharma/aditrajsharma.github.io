@@ -3,7 +3,7 @@ const projects = [
     title: "RYNEX",
     discipline: "Threat Intelligence / Graph Analysis / AI",
     year: "2026",
-    image: "chrome.jpg",
+    image: "rynex.jpg",
     tag: "PROJECT / 2026",
     description: "Connecting clues that don't look connected at first.",
   },
