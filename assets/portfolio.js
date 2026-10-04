@@ -11,7 +11,7 @@ const projects = [
     title: "CLARIX",
     discipline: "Deep Learning / Computer Vision / Geospatial",
     year: "2026",
-    image: "off-grid.svg",
+    image: "clarix.jpg",
     tag: "PROJECT / 2026",
     description:
       "Making medium-resolution satellite imagery more useful at a finer scale.",
@@ -20,7 +20,7 @@ const projects = [
     title: "EAZZIO PAYROLL",
     discipline: "Full Stack / Web & Mobile",
     year: "2026",
-    image: "blue.jpg",
+    image: "eazzio.jpg",
     tag: "PROJECT / 2026",
     description: "Smart Field Management for Stronger Teams.",
   },

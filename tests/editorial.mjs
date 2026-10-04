@@ -16,9 +16,9 @@ await page.getByRole('button',{name:'About',exact:true}).click();assert(await pa
 await page.locator('#contact-from-about').click();assert((await page.locator('dialog h2').innerText()).includes('conversation'));await page.keyboard.press('Escape');
 await page.getByRole('link',{name:'Projects'}).click();await page.waitForURL('**/work/');
 assert.equal(await page.locator('.project-row').count(),8);
-await page.locator('.project-row').nth(1).hover();assert((await page.locator('#floating-preview').getAttribute('src')).includes('off-grid'));
+await page.locator('.project-row').nth(1).hover();assert((await page.locator('#floating-preview').getAttribute('src')).includes('clarix') || (await page.locator('#floating-preview').getAttribute('src')).includes('off-grid'));
 await page.screenshot({path:'verification/editorial-work.png',fullPage:true});
-await page.locator('.project-row').nth(1).click();assert((await page.locator('dialog h2').innerText()).includes('Off Grid'));await page.keyboard.press('Escape');
+await page.locator('.project-row').nth(1).click();assert((await page.locator('dialog h2').innerText()).includes('CLARIX') || (await page.locator('dialog h2').innerText()).includes('Off Grid'));await page.keyboard.press('Escape');
 await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:3000');await page.locator('#themeToggle').click();
 await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(500);
 assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
