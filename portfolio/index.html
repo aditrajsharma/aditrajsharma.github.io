@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditraj Sharma — Builder. Brewer. Wanderer.</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%230B0B4E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF3E7;
+    --bg2:#FCFCF9;
+    --ink:#0B0B4E;
+    --muted:#61699B;
+    --line:#C6CAE9;
+    --line-dark:#101090;
+    --accent:#DB1E4B;
+    --hl:#ECC86B;
+    --mono:'Space Mono', ui-monospace, 'Courier New', monospace;
+    --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:14px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--hl);color:var(--ink)}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+
+  /* ---------- type helpers ---------- */
+  .mono{font-family:var(--mono)}
+  .eyebrow{
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow .sq{display:inline-block;width:7px;height:7px;background:var(--hl);margin-right:10px;transform:translateY(-1px)}
+  .link{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px;
+    transition:color .15s,border-color .15s;
+  }
+  .link:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:11px 18px;border:1px solid var(--ink);border-radius:10px;text-decoration:none;cursor:pointer;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .btn.dark{background:var(--ink);color:var(--bg)}
+  .btn.dark:hover{background:var(--accent);border-color:var(--accent)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--bg)}
+  .btn.small{padding:8px 14px;font-size:10px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,243,231,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar{display:flex;align-items:center;gap:26px;height:58px}
+  .brand{font-weight:800;font-size:15px;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+  .brand .tag{
+    font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.12em;
+    border:1px solid var(--ink);padding:2px 6px;margin-left:10px;vertical-align:2px;
+  }
+  nav{margin-left:auto;display:flex;gap:22px}
+  nav a{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    text-decoration:none;color:var(--muted);transition:color .15s;
+  }
+  nav a:hover,nav a.active{color:var(--ink)}
+  nav a.active{border-bottom:1px solid var(--accent);padding-bottom:2px}
+
+  /* ---------- section label & scroll margin ---------- */
+  section, main, [id] {
+    scroll-margin-top: 72px;
+  }
+  section{padding:64px 0}
+  .slabel{
+    display:flex;justify-content:space-between;gap:16px;
+    border-top:1px solid var(--ink);padding-top:10px;margin-bottom:34px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---------- experience section ---------- */
+  .exp-grid{display:flex;flex-direction:column;gap:16px}
+  .exp-card{background:var(--bg2);border:1px solid var(--line-dark);border-radius:14px;padding:24px;transition:transform .2s,border-color .2s}
+  .exp-card:hover{transform:translateY(-3px);border-color:var(--ink)}
+  .exp-header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+  .exp-role{font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+  .exp-company{font-size:14px;font-weight:600;color:var(--accent);margin-left:6px}
+  .exp-duration{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .exp-desc{font-size:12.5px;color:#4A5079;margin:8px 0 14px;max-width:72ch}
+  .exp-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .exp-tags span{font-family:var(--mono);font-size:9px;letter-spacing:.1em;border:1px solid var(--line-dark);border-radius:999px;padding:3px 10px;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 60px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
+  h1{
+    font-size:clamp(52px,7.2vw,92px);line-height:.95;font-weight:900;letter-spacing:-.03em;
+    margin:22px 0 26px;
+  }
+  h1 .accent{background:var(--hl);color:var(--ink);padding:0 .12em}
+  .hero p.lede{max-width:46ch;color:#3A3F66;font-size:15px}
+  .hero .cta-row{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .portrait{width:100%;max-width:430px;margin-left:auto}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:20px}
+  .stat{border-top:1px solid var(--line);padding:12px 0 4px}
+  .stat b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .stat span{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- cards ---------- */
+  .card{background:var(--bg2);border:1px solid var(--line-dark);border-radius:14px;padding:24px;transition:transform .2s,border-color .2s}
+  .card:hover{transform:translateY(-3px);border-color:var(--ink)}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card .date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .card h3{font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.3;margin:10px 0 10px}
+  .card p{font-size:12.5px;color:#4A5079}
+
+  /* ---------- offscreen ---------- */
+  .art{
+    border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);
+    margin:16px 0;padding:22px 0;display:flex;justify-content:center;align-items:center;min-height:120px;
+  }
+  .meta-row{
+    display:flex;justify-content:space-between;gap:10px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---------- work ---------- */
+  h2.big{font-size:clamp(28px,3.8vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.12;max-width:22ch}
+  h2.big .dim{color:var(--muted)}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px;flex-wrap:wrap}
+  .proj{border:1px solid var(--line-dark);border-radius:14px;overflow:hidden;background:var(--bg2);display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+  .proj:hover{transform:translateY(-3px);border-color:var(--ink)}
+  .proj img{width:100%;aspect-ratio:4/3;object-fit:cover;border-bottom:1px solid var(--line);filter:grayscale(1) contrast(1.06)}
+  .proj .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .proj .num{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proj h3{font-size:16px;font-weight:800;line-height:1.3}
+  .proj p{font-size:12.5px;color:#4A5079;flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tags span{font-family:var(--mono);font-size:9px;letter-spacing:.1em;border:1px solid var(--line-dark);border-radius:999px;padding:3px 10px;text-transform:uppercase;color:var(--muted)}
+  .metrics{border-top:1px solid var(--line);padding-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--line-dark)}
+  .work-foot{display:flex;justify-content:flex-end;margin-top:26px}
+
+  /* ---------- experiments ---------- */
+  .row{
+    display:grid;grid-template-columns:150px 1fr auto;gap:20px;align-items:baseline;
+    padding:20px 6px;border-top:1px solid var(--line);transition:background .15s;
+  }
+  .row:last-of-type{border-bottom:1px solid var(--line)}
+  .row:hover{background:var(--bg2)}
+  .status{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;transform:translateY(-1px)}
+  .dot.green{background:var(--ink)}.dot.amber{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink)}.dot.grey{background:#8FA9DA}
+  .row h3{font-size:15px;font-weight:800;margin-bottom:4px}
+  .row p{font-size:12.5px;color:#4A5079;max-width:64ch}
+  .row .side{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;white-space:nowrap}
+  .foot-note{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted)}
+
+  /* ---------- writing ---------- */
+  .post .meta{display:flex;gap:14px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .post h3{font-size:18px;font-weight:800;line-height:1.3;margin:12px 0 10px}
+  .post p{font-size:12.5px;color:#4A5079;margin-bottom:16px}
+
+  /* ---------- life ---------- */
+  .life-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .frame{border:1px solid var(--line-dark);border-radius:16px;padding:10px;background:var(--bg2);overflow:hidden}
+  .frame img{width:100%;object-fit:cover;filter:grayscale(1) contrast(1.08)}
+  .frame .cap{display:flex;gap:14px;padding-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .frame .cap .dot{background:var(--accent)}
+  .life-copy p{font-size:15px;color:#3A3F66;max-width:44ch;margin-bottom:22px}
+  .life-copy p b{color:var(--ink)}
+
+  /* ---------- cta ---------- */
+  .cta{border-top:1px solid var(--ink);padding:88px 0}
+  .cta-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center}
+  h2.huge{font-size:clamp(44px,6vw,76px);font-weight:900;letter-spacing:-.03em;line-height:1}
+  h2.huge .accent{background:var(--hl);color:var(--ink);padding:0 .12em}
+  .cta-copy p{color:#3A3F66;font-size:14px;max-width:42ch;margin-bottom:24px}
+  .cta-copy .btn{margin:0 10px 10px 0}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--ink);padding:44px 0 30px}
+  .foot-top{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px;flex-wrap:wrap}
+  .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px;margin-bottom:44px}
+  .foot-grid h4{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .foot-grid a{display:block;font-size:12.5px;text-decoration:none;color:#3A3F66;margin-bottom:8px}
+  .foot-grid a:hover{color:var(--accent)}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .bar{flex-wrap:wrap;height:auto;padding:12px 0;gap:12px}
+    nav{display:flex;order:3;width:100%;overflow-x:auto;padding-bottom:4px;gap:16px}
+    .hero-grid,.life-grid,.cta-grid{grid-template-columns:1fr}
+    .cards3{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .portrait{margin:0 auto}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .row{grid-template-columns:1fr;gap:8px}
+    .row .side{text-align:left}
+  }
+  @media (max-width:640px){
+    .cards2{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#home">Aditraj Sharma<span class="tag">PORTFOLIO — 2026</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#home" class="active">Home</a>
+      <a href="#project">Project</a>
+      <a href="#experience">Experience</a>
+      <a href="#life">Life</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
+    <a class="btn dark small" href="#contact" style="margin-left:auto">Get in Touch ↗</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <div class="wrap hero" id="home">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="sq"></span>Currently at: Jamshedpur, India— open to interesting conversations</div>
+        <h1>Builder.<br>Brewer.<br><span class="accent">Wanderer.</span></h1>
+        <p class="lede">I design and build software that people actually use — pairing thoughtful UX, clear writing, and a little AI where it earns its place.</p>
+        <div class="cta-row">
+          <a class="btn dark" href="#project">See Selected Work ↓</a>
+          <a class="btn ghost" href="#contact">Download Résumé ↗</a>
+        </div>
+      </div>
+      <div>
+        <img class="portrait" src="images/portrait-final.png" alt="Painted editorial portrait — the engineer or systems architect">
+        <div class="stats">
+          <div class="stat"><b>1</b><span>Years building</span></div>
+          <div class="stat"><b>2</b><span>Projects shipped</span></div>
+          <div class="stat" style="grid-column:1/-1"><b>5k+</b><span>Lines of code written (approx.)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ============ 02 / OFF-SCREEN ============ -->
+  <section id="offscreen" style="padding-top:0">
+    <div class="wrap">
+      <div class="slabel"><span>02 / Off-Screen</span><span>Fuel &amp; input</span></div>
+      <div class="cards3">
+        <div class="card">
+          <div class="date">Coffee</div>
+          <h3>House Roast, Rounded</h3>
+          <div class="art">
+            <svg width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
+              <g fill="#0B0B4E">
+                <circle cx="27" cy="26" r="15"/><circle cx="75" cy="26" r="15"/><circle cx="123" cy="26" r="15"/>
+              </g>
+              <g stroke="#f3f3f1" stroke-width="2.5" fill="none" stroke-linecap="round">
+                <path d="M22 14c7 8 1 16 9 24"/><path d="M70 14c7 8 1 16 9 24"/><path d="M118 14c7 8 1 16 9 24"/>
+              </g>
+            </svg>
+          </div>
+          <p>This week's pour: single origin, medium roast, notes of jaggery and cacao. Ground at the desk, always.</p>
+          <div class="art" style="min-height:0;padding:10px 0 0;margin:14px 0 0;border-bottom:0">
+            <div class="meta-row" style="width:100%"><span>Grind: medium</span><span>Method: pour over</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="date">Brew</div>
+          <h3>Bloom No. 43</h3>
+          <div class="art">
+            <svg width="86" height="104" viewBox="0 0 86 104" aria-hidden="true">
+              <g stroke="#8FA9DA" stroke-width="2" fill="none" stroke-linecap="round">
+                <path d="M34 6c0 6 6 6 6 12"/><path d="M50 4c0 6 6 6 6 12"/>
+              </g>
+              <path d="M20 26h46l-3 10H23z" fill="#101090"/>
+              <path d="M23 36h40l-6 62H29z" fill="#0B0B4E"/>
+              <path d="M26 52h36l-3 22H28z" fill="#ECC86B"/>
+              <circle cx="44" cy="63" r="6" fill="#f3f3f1"/>
+            </svg>
+          </div>
+          <p>A slow Saturday ritual: fifteen grams in, two-fifty out, thirty-second bloom. The kettle is the only clock I trust.</p>
+          <div class="art" style="min-height:0;padding:10px 0 0;margin:14px 0 0;border-bottom:0">
+            <div class="meta-row" style="width:100%"><span>Water: 94°C</span><span>Ratio: 1:16</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="date">Reading</div>
+          <h3>On the nightstand</h3>
+          <div class="art">
+            <svg width="96" height="112" viewBox="0 0 96 112" aria-hidden="true">
+              <rect x="10" y="4" width="76" height="104" fill="#0B0B4E"/>
+              <rect x="10" y="4" width="7" height="104" fill="#000000"/>
+              <g fill="#f3f3f1" font-family="'Space Mono','Courier New',monospace" font-size="8" letter-spacing="1">
+                <text x="28" y="34">LETTERS</text>
+                <text x="28" y="46">FROM A</text>
+                <text x="28" y="58">QUIET MIND</text>
+              </g>
+              <rect x="28" y="86" width="34" height="3" fill="#ECC86B"/>
+            </svg>
+          </div>
+          <p>A memoir about attention, patience and doing one thing at a time — reread every year, underlined further each time.</p>
+          <div class="art" style="min-height:0;padding:10px 0 0;margin:14px 0 0;border-bottom:0">
+            <div class="meta-row" style="width:100%"><span>Page 143 / 312</span><span>Loan from a friend</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 / PROJECT ============ -->
+  <section id="project" style="padding-top:0">
+    <div class="wrap">
+      <div class="slabel"><span>03 / Project — Selected Work</span><span>2017 → 2026</span></div>
+      <div class="head-row">
+        <h2 class="big">A year of building software. <span class="dim">Three projects that say the most.</span></h2>
+        <a class="link" href="#contact">View full archive →</a>
+      </div>
+      <div class="cards3">
+        <article class="proj">
+          <img src="images/project-atlas.jpg" alt="Abstract wireframe collage for project Atlas">
+          <div class="body">
+            <div class="num">01 / SaaS Platform · 2024 · Lead Design Engineer</div>
+            <h3>Atlas — rebuilding a debt-management platform end to end</h3>
+            <p>A ground-up redesign and rebuild: a fully reusable component library, WCAG-AA throughout, and onboarding flows that stopped leaking people halfway through.</p>
+            <div class="tags"><span>React</span><span>Node</span><span>Design System</span></div>
+            <div class="metrics">40% faster checkout · AA accessibility</div>
+          </div>
+        </article>
+        <article class="proj">
+          <img src="images/project-orbit.jpg" alt="Maroon sphere poster for project Orbit">
+          <div class="body">
+            <div class="num">02 / Retail Ops · 2022 · Frontend Architect</div>
+            <h3>Orbit — an operations platform for a major food retailer</h3>
+            <p>A 14-week sprint unifying supply, stock and storefront tooling across hundreds of outlets. Shipped in twelve weeks, cut over with zero downtime.</p>
+            <div class="tags"><span>Next.js</span><span>Postgres</span><span>Ops</span></div>
+            <div class="metrics">200+ stores · 99.99% uptime</div>
+          </div>
+        </article>
+        <article class="proj">
+          <img src="images/project-ledger.jpg" alt="Paper collage for project Ledger">
+          <div class="body">
+            <div class="num">03 / Ed-Tech · 2020 · System Designer</div>
+            <h3>Ledger — scaling a learning platform from 500k to 1.5M learners</h3>
+            <p>Re-architecting content delivery and billing for a 3× audience without dropping a single semester. Boring infrastructure, exciting graphs.</p>
+            <div class="tags"><span>System Design</span><span>CDN</span><span>Billing</span></div>
+            <div class="metrics">3× traffic · 0 dropped sessions</div>
+          </div>
+        </article>
+      </div>
+      <div class="work-foot"><a class="btn dark" href="#contact">Get in Touch →</a></div>
+    </div>
+  </section>
+
+  <!-- ============ 04 / EXPERIENCE ============ -->
+  <section id="experience" style="padding-top:0">
+    <div class="wrap">
+      <div class="slabel"><span>04 / Experience</span><span>Where I've worked</span></div>
+      <div class="head-row">
+        <h2 class="big">Where I've worked.</h2>
+        <a class="link" href="#contact">Download résumé →</a>
+      </div>
+      <div id="experience-list" class="exp-grid">
+        <!-- Rendered dynamically from experiences array -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 / LAB ============ -->
+  <section id="lab" style="padding-top:0">
+    <div class="wrap">
+      <div class="slabel"><span>05 / Lab — Experiments</span><span>Tinkering, openly</span></div>
+      <div class="head-row">
+        <h2 class="big">Where I build things that don't have a brief yet.</h2>
+        <a class="link" href="#contact">View all experiments →</a>
+      </div>
+
+      <div class="row">
+        <div class="status"><span class="dot green"></span>Shipped</div>
+        <div>
+          <h3>Quiet Inbox</h3>
+          <p>An AI triage layer that drafts replies in my voice — a small model fine-tuned on five years of my writing. I still press send; it just makes pressing send faster.</p>
+        </div>
+        <div class="side">AI · Email · 2026</div>
+      </div>
+      <div class="row">
+        <div class="status"><span class="dot amber"></span>In progress</div>
+        <div>
+          <h3>Roast Logger</h3>
+          <p>Computer-vision notes for my morning pour-over: bloom time, turbulence, temperature drift — and whether the thirty-second rule is real or folklore.</p>
+        </div>
+        <div class="side">CV · Coffee · 2026</div>
+      </div>
+      <div class="row">
+        <div class="status"><span class="dot grey"></span>Archived</div>
+        <div>
+          <h3>AC, but in CSS</h3>
+          <p>A tiny thermostat simulator rendered entirely in CSS, because someone on the internet said it couldn't be done. It can. It shouldn't. It's archived with love.</p>
+        </div>
+        <div class="side">CSS · Fun · 2025</div>
+      </div>
+
+      <p class="foot-note">Some experiments become client work. Some stay toys. Both are the point.</p>
+    </div>
+  </section>
+
+
+  <!-- ============ 07 / LIFE ============ -->
+  <section id="life" style="padding-top:0">
+    <div class="wrap">
+      <div class="slabel"><span>07 / Life — Outside the Work</span><span>Field notes</span></div>
+      <div class="life-grid">
+        <div class="frame">
+          <img src="images/travel.jpg" alt="Night travel photo collage">
+          <div class="cap"><span><span class="dot"></span>22 cities</span><span>9 countries</span><span>1 rucksack</span></div>
+        </div>
+        <div class="life-copy">
+          <p><b>The best ideas arrive at altitude.</b> I travel light, walk a lot, and take notes in airport terminals — the work notebook fills up faster on the road than it ever does at the desk.</p>
+          <a class="link" href="#contact">Read the travel notes →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" id="contact">
+    <div class="wrap cta-grid">
+      <h2 class="huge">Bring me the <span class="accent">hard</span> problem.</h2>
+      <div class="cta-copy">
+        <p>I take on a small number of projects involving tricky UX, unglamorous systems, or sentences that need untangling. If that sounds like yours, my inbox is open.</p>
+        <a class="btn dark" href="mailto:you@example.com">Start a Project →</a><br>
+        <a class="btn ghost small" href="mailto:you@example.com">Email ↗</a>
+        <a class="btn ghost small" href="#">LinkedIn ↗</a>
+        <a class="btn ghost small" href="#">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <span>© 2026 Aditraj Sharma</span>
+      <span>Built by hand. No template, no tracker.</span>
+    </div>
+    <div class="foot-grid">
+      <div>
+        <h4>Now</h4>
+        <a href="#offscreen">Reading list</a>
+        <a href="#offscreen">Listening log</a>
+      </div>
+      <div>
+        <h4>Work</h4>
+        <a href="#project">Selected Work</a>
+        <a href="#experience">Experience</a>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <a href="#home">Home</a>
+        <a href="#project">Project</a>
+        <a href="#experience">Experience</a>
+        <a href="#life">Life</a>
+        <a href="gallery.html">Gallery ↗</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Last shipped: Oct 2026</span>
+      <span>Set in Archivo &amp; Space Mono</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // =======================================================
+  // 1. EXPERIENCE DATA
+  // =======================================================
+  // TODO: replace placeholder content
+  const experiences = [
+    {
+      role: "Your Role Title",
+      company: "Company Name",
+      duration: "MMM YYYY – MMM YYYY",
+      description: "Add a short description of what you did and the impact.",
+      tags: ["Tag 1", "Tag 2", "Tag 3"]
+    },
+    {
+      role: "Your Role Title",
+      company: "Company Name",
+      duration: "MMM YYYY – MMM YYYY",
+      description: "Add a short description of what you did and the impact.",
+      tags: ["Tag 1", "Tag 2", "Tag 3"]
+    },
+    {
+      role: "Your Role Title",
+      company: "Company Name",
+      duration: "MMM YYYY – MMM YYYY",
+      description: "Add a short description of what you did and the impact.",
+      tags: ["Tag 1", "Tag 2", "Tag 3"]
+    }
+  ];
+
+  // =======================================================
+  // RENDER HELPERS
+  // =======================================================
+  function renderExperiences() {
+    const container = document.getElementById('experience-list');
+    if (!container) return;
+    container.innerHTML = experiences.map((exp) => `
+      <article class="exp-card">
+        <div class="exp-header">
+          <div>
+            <span class="exp-role">${exp.role}</span>
+            <span class="exp-company">@ ${exp.company}</span>
+          </div>
+          <span class="exp-duration">${exp.duration}</span>
+        </div>
+        <p class="exp-desc">${exp.description}</p>
+        <div class="exp-tags">
+          ${exp.tags.map(t => `<span>${t}</span>`).join('')}
+        </div>
+      </article>
+    `).join('');
+  }
+
+  // =======================================================
+  // ACTIVE NAVIGATION (INTERSECTION OBSERVER)
+  // =======================================================
+  function initNavObserver() {
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const sectionIds = ['home', 'project', 'experience', 'life'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    if ('IntersectionObserver' in window && sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '-15% 0px -65% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(sec => observer.observe(sec));
+    }
+  }
+
+  // Initial execution
+  renderExperiences();
+  initNavObserver();
+</script>
+</body>
+</html>
