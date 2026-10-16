@@ -1,4 +1,4 @@
-# Aditraj Sharma — Personal Portfolio & Visual Archive
+# Aditraj Sharma — Developer Portfolio & Creative Work
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-2ea44f?style=flat-square&logo=github)](https://aditrajsharma.github.io/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
@@ -6,7 +6,9 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-A handcrafted, high-performance personal portfolio website built with pure semantic HTML5, modern vanilla CSS, and lightweight JavaScript. Designed with a warm editorial aesthetic, custom typography, subtle micro-interactions, an animated wave footer, and a dedicated pixel art gallery.
+A personal space where I share what I build, what I learn, and the ideas I bring to life through code and design.
+
+Built with HTML, CSS, and JavaScript, the site brings together my projects, experiments, minimal design with subtle animations and a few details that make it feel like my own.
 
 **Live Website:** [aditrajsharma.github.io](https://aditrajsharma.github.io/)
 
